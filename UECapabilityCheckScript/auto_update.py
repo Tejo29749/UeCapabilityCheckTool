@@ -2,7 +2,7 @@ import requests, os, json
 
 # 配置仓库信息
 OWNER = "Tejo29749"  # 仓库所有者
-REPO = "FT_tool"  # 仓库名
+REPO = "UeCapabilityCheckTool"  # 仓库名
 BRANCH = "main"  # 分支名
 
 # 获取脚本所在目录的上一级路径,并确保路径是绝对路径
