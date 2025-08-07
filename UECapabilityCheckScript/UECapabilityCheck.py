@@ -1180,6 +1180,8 @@ class UeCapabilityCheckTool():
                 line)
             if m == None:
                 m = re.search("^([0-9][0-9]:[0-9][0-9]:[0-9][0-9]\.[0-9][0-9][0-9][0-9][0-9][0-9])\t+(\[.+\])\t+(.+$)", line)
+            if m == None:
+                m = re.search("^([0-9][0-9]:[0-9][0-9]:[0-9][0-9]\.[0-9][0-9][0-9])\t+(\[.+\])\t+(.+$)", line)
             if m:
                 collect_start = True
                 log.append({"Time": m.group(1),
@@ -1195,11 +1197,13 @@ class UeCapabilityCheckTool():
         for each in log:
             if each["Description"] == "LTE RRC OTA Packet  --  DL_DCCH / UECapabilityEnquiry" or \
                     each["Description"] == "NR5G RRC OTA Packet  --  DL_DCCH / UeCapabilityEnquiry" or \
+                    each["Description"] == "DL_DCCH / UECapabilityEnquiry" or \
                     each["Description"] == "DL_DCCH / UeCapabilityEnquiry":
                 enquiry = "\n".join(each["cont"])
 
             if each["Description"] == "LTE RRC OTA Packet  --  UL_DCCH / UECapabilityInformation" or \
                     each["Description"] == "NR5G RRC OTA Packet  --  UL_DCCH / UeCapabilityInformation" or \
+                    each["Description"] == "UL_DCCH / UECapabilityInformation" or \
                     each["Description"] == "UL_DCCH / UeCapabilityInformation":
                 each_dict = {"Time": each["Time"], "CapabilityLog": "\n".join(each["cont"]), "enquiry": enquiry}
                 self.log_stored_lst.append(each_dict)
