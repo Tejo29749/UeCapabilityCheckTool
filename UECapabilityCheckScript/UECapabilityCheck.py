@@ -945,12 +945,21 @@ def set_ENDC_NRCA_excel(ws, CA_dict, result_dict, cur_row, isMrDC = False):
                         per_cc_lst.append(",".join(f_set["featureSetListPerDownlinkCC"][index]))
                     ws.cell(cur_row + j, 12).value = "|".join(per_cc_lst)
 
-                    first_cc = per_cc_lst[0]
-                    first_cc_int = int(first_cc.split(",")[0])
-                    if "featureSetsDownlinkPerCC" in f_set:
-                        tmp_cc = f_set["featureSetsDownlinkPerCC"][first_cc_int - 1]
-                        tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
-                        ws.cell(cur_row + j, 13).value = tmp_cc_str
+                    # first_cc = per_cc_lst[0]
+                    # first_cc_int = int(first_cc.split(",")[0])
+                    # if "featureSetsDownlinkPerCC" in f_set:
+                    #     tmp_cc = f_set["featureSetsDownlinkPerCC"][first_cc_int - 1]
+                    #     tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
+                    #     tmp_cc_str = f"{tmp_cc['log_snip']}" # 返回整个featureSetsDownlinkPerCC
+                    #     ws.cell(cur_row + j, 13).value = tmp_cc_str
+                    tmp_cc_lst = [] # 返回整个featureSetsDownlinkPerCC,并添加分隔行
+                    for per_cc in per_cc_lst:
+                        per_cc_int = int(per_cc.split(",")[0])
+                        if "featureSetsDownlinkPerCC" in f_set:
+                            tmp_cc = f_set["featureSetsDownlinkPerCC"][per_cc_int - 1]
+                            # tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
+                            tmp_cc_lst.append(f"{tmp_cc['log_snip']}")
+                    ws.cell(cur_row + j, 13).value = "\n----------\n".join(tmp_cc for tmp_cc in tmp_cc_lst)
 
                 if not "ClassUL-NR" in each_band:
                     ws.cell(cur_row + j, 14).value = "-"
@@ -963,12 +972,21 @@ def set_ENDC_NRCA_excel(ws, CA_dict, result_dict, cur_row, isMrDC = False):
                         per_cc_lst.append(",".join(f_set["featureSetListPerUplinkCC"][index]))
                     ws.cell(cur_row + j, 14).value = "|".join(per_cc_lst)
 
-                    first_cc = per_cc_lst[0]
-                    first_cc_int = int(first_cc.split(",")[0])
-                    if "featureSetsUplinkPerCC" in f_set:
-                        tmp_cc = f_set["featureSetsUplinkPerCC"][first_cc_int - 1]
-                        tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
-                        ws.cell(cur_row + j, 15).value = tmp_cc_str
+                    # first_cc = per_cc_lst[0]
+                    # first_cc_int = int(first_cc.split(",")[0])
+                    # if "featureSetsUplinkPerCC" in f_set:
+                    #     tmp_cc = f_set["featureSetsUplinkPerCC"][first_cc_int - 1]
+                    #     tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
+                    #     tmp_cc_str = f"{tmp_cc['log_snip']}" # 返回整个featureSetsUplinkPerCC
+                    #     ws.cell(cur_row + j, 15).value = tmp_cc_str
+                    tmp_cc_lst = [] # 返回整个featureSetsUplinkPerCC,并添加分隔行
+                    for per_cc in per_cc_lst:
+                        per_cc_int = int(per_cc.split(",")[0])
+                        if "featureSetsUplinkPerCC" in f_set:
+                            tmp_cc = f_set["featureSetsUplinkPerCC"][per_cc_int - 1]
+                            # tmp_cc_str = f"SCS:{tmp_cc['scs']} BW:{tmp_cc['bw']} {tmp_cc['layer']} {tmp_cc['mod']}"
+                            tmp_cc_lst.append(f"{tmp_cc['log_snip']}")
+                    ws.cell(cur_row + j, 15).value = "\n----------\n".join(tmp_cc for tmp_cc in tmp_cc_lst)
 
         cur_row += len(each["bandList"])
     return cur_row
